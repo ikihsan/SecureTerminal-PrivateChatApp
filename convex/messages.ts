@@ -49,6 +49,15 @@ export const send = mutation({
       createdAt: Date.now(),
       expiresAt: args.mediaMeta ? Date.now() + args.mediaMeta.ttlSec * 1000 : undefined,
     });
+    if (args.mediaMeta) {
+      await ctx.db.insert("media", {
+        storageId: args.mediaMeta.storageId!,
+        uploadedBy: args.authorId,
+        uploadedAt: Date.now(),
+        ttlSec: args.mediaMeta.ttlSec,
+        expiresAt: args.mediaMeta.expiresAt,
+      });
+    }
     console.log(`Message sent:`, { messageId, ...args });
     return messageId;
   },
