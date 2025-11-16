@@ -1,100 +1,54 @@
-# PrivateChat - Shadow Terminal Comm Link
+# Secure Terminal - Private Chat App
 
-An elite communication fortress for the digital underground. Where hackers, operatives, and the dark web army converge in encrypted shadow channels. Built with cutting-edge tech to ensure absolute anonymity and zero-trace operations.
+A clandestine, terminal-based private messaging application built with Next.js, Convex, and Tailwind CSS.
 
-## Elite Features
+## Features
 
-- **Zero-Trace Authentication**: Phantom registration, login, and recovery protocols
-- **Shadow Chat Rooms**: Deploy private terminals with unique access codes
-- **Command Center Dashboard**: Oversee your covert operations and connections
-- **Encrypted Media Drops**: Share classified files through secure tunnels
-- **Access Control Matrix**: Dictate who infiltrates your private networks
-- **Ban Hammer Protocol**: Eliminate threats and rogue elements
-- **Session Surveillance**: Track active operatives in real-time
-- **Adaptive Interface**: Seamless deployment on any device, from mainframes to mobiles
+- **Secure Authentication**: Device-based hashing and attempt limiting
+- **Private Connections**: Connect with users via username and connection code
+- **Ephemeral Media**: Media files with configurable TTL (auto-deletion)
+- **Terminal UI**: Retro terminal aesthetic with neon colors and animations
+- **Real-time Messaging**: Powered by Convex for live updates
 
-## Tech Arsenal
+## Tech Stack
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS (sleek, stealthy UI)
-- **Backend**: Convex (serverless shadow infrastructure)
-- **Authentication**: Custom auth system with Convex (unbreakable encryption)
-- **Styling**: Tailwind CSS for modern, minimalist dark aesthetics
-- **Deployment**: Ready for underground servers or cloud fortresses
+- **Frontend**: Next.js 14, React 18, Tailwind CSS
+- **Backend**: Convex (serverless database and functions)
+- **Styling**: Custom CSS with terminal theme
+- **Deployment**: Ready for Vercel/Netlify + Convex
 
-## Boot Sequence
+## Getting Started
 
-### System Requirements
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up Convex: `npx convex dev`
+4. Configure environment variables in `.env.local`
+5. Run development server: `npm run dev`
 
-- Node.js 18+ (latest hacker toolkit)
-- npm or yarn (package managers for the elite)
-- Convex account (your gateway to the shadow realm)
+## Environment Variables
 
-### Deployment Protocol
+- `NEXT_PUBLIC_CONVEX_URL`: Your Convex deployment URL
 
-1. Clone the shadow repository:
-   ```bash
-   git clone <your-dark-repo-url>
-   cd PrivateChat
-   ```
+## Project Structure
 
-2. Install covert dependencies:
-   ```bash
-   npm install
-   ```
+- `src/app/`: Next.js app router pages
+- `src/components/`: Reusable UI components
+- `convex/`: Backend functions and schema
+- `public/`: Static assets
 
-3. Initialize Convex shadow server:
-   ```bash
-   npx convex dev
-   ```
+## Security Features
 
-4. Configure your `.env.local` with encrypted environment variables (Convex URL and classified data).
+- Device fingerprinting for session management
+- Attempt limiting with IP-based bans
+- Ephemeral media storage
+- Password hashing with bcrypt
 
-5. Launch the terminal:
-   ```bash
-   npm run dev
-   ```
+## Deployment
 
-6. Access the dark web portal at [http://localhost:3000](http://localhost:3000).
+1. Deploy Convex: `npx convex deploy`
+2. Build Next.js: `npm run build`
+3. Deploy to your hosting platform
 
-## Network Architecture
+## Contributing
 
-```
-src/
-├── app/                 # Next.js app router terminals
-│   ├── auth/           # Authentication shadow zones
-│   ├── app/            # Main command centers (dashboard, chat)
-│   └── components/     # Reusable covert UI modules
-convex/                 # Convex backend shadow functions and schema
-public/                 # Encrypted static assets
-```
-
-## Terminal Commands
-
-- `npm run dev` - Activate development terminal
-- `npm run build` - Compile for production deployment
-- `npm run start` - Launch production shadow server
-- `npm run lint` - Scan for code vulnerabilities
-
-## Join the Resistance
-
-1. Fork the underground repository
-2. Create a covert feature branch
-3. Implement your black-hat modifications
-4. Test in the shadows
-5. Submit encrypted pull request
-
-## Absolute Anonymity & Security
-
-This terminal prioritizes the hacker ethos:
-- End-to-end quantum encryption for all comms
-- Unbreakable authentication protocols
-- Phantom chat rooms with elite access control
-- Zero logging, zero tracking, zero surveillance
-
-## License
-
-[MIT License](LICENSE) - Free for the digital army
-
-## Ghost Support
-
-For covert operations or questions, infiltrate an issue on GitHub. Stay in the shadows.
+Please ensure all changes maintain the terminal aesthetic and security standards.

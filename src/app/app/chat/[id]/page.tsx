@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useQuery, useMutation, useAction, useConvex } from 'convex/react'
 import { useParams } from 'next/navigation'
 import { api } from 'convex/_generated/api'
+import Image from 'next/image'
 import Header from '../../../../components/Header'
 
 export const dynamic = 'force-dynamic'
@@ -22,6 +23,15 @@ export default function Chat() {
   const convex = useConvex()
   const baseUrl = convex.url
   const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({})
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -40,7 +50,7 @@ export default function Chat() {
       setMediaUrls(prev => ({ ...prev, ...urls }))
     }
     fetchUrls()
-  }, [messages, getStorageUrl])
+  }, [messages, getStorageUrl, mediaUrls])
 
   useEffect(() => {
     setUserId(localStorage.getItem('userId'))
@@ -93,30 +103,35 @@ export default function Chat() {
       <Header />
       <div className="p-4">
         {error && <p className="text-amber mb-4 text-center">{error}</p>}
-        <div className="space-y-4 mb-4 max-h-96 overflow-y-auto p-4 terminal-panel">
-          {messages?.map((msg: any) => (
-            <div key={msg._id} className={`flex ${msg.authorId === userId ? 'justify-end' : 'justify-start'}`}>
-              <div className={`${msg.authorId === userId ? 'message-outgoing' : 'message-incoming'} relative overflow-hidden crt-scan`}>
-                {msg.mediaMeta && (
-                  <div className="mb-2">
-                    {mediaUrls[msg.mediaMeta.storageId] ? (
-                      msg.mediaMeta.mime.startsWith('image/') ? (
-                        <img src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration" />
-                      ) : msg.mediaMeta.mime.startsWith('video/') ? (
-                        <video src={mediaUrls[msg.mediaMeta.storageId]} controls className="max-w-full rounded max-h-64 shadow-elevation-1" />
+        <div className="space-y-4 mb-4 h-96 overflow-y-auto p-4 terminal-panel">
+          {messages ? (
+            messages.map((msg: any) => (
+              <div key={msg._id} className={`flex ${msg.authorId === userId ? 'justify-end' : 'justify-start'}`}>
+                <div className={`${msg.authorId === userId ? 'message-outgoing' : 'message-incoming'} relative overflow-hidden crt-scan`}>
+                  {msg.mediaMeta && (
+                    <div className="mb-2">
+                      {mediaUrls[msg.mediaMeta.storageId] ? (
+                        msg.mediaMeta.mime.startsWith('image/') ? (
+                          <Image src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" width={500} height={300} className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration object-cover" />
+                        ) : msg.mediaMeta.mime.startsWith('video/') ? (
+                          <video src={mediaUrls[msg.mediaMeta.storageId]} controls className="max-w-full rounded max-h-64 shadow-elevation-1" />
+                        ) : (
+                          <a href={mediaUrls[msg.mediaMeta.storageId]} target="_blank" rel="noopener noreferrer" className="text-acid-cyan underline hover:text-neon-green transition-colors">DOWNLOAD PAYLOAD</a>
+                        )
                       ) : (
-                        <a href={mediaUrls[msg.mediaMeta.storageId]} target="_blank" rel="noopener noreferrer" className="text-acid-cyan underline hover:text-neon-green transition-colors">DOWNLOAD PAYLOAD</a>
-                      )
-                    ) : (
-                      <div className="text-sm text-text-muted led-pulse">Loading payload...</div>
-                    )}
-                  </div>
-                )}
-                {msg.text && <div className="break-words">{msg.text}</div>}
-                <div className="message-timestamp">{new Date(msg.createdAt).toLocaleTimeString()}</div>
+                        <div className="text-sm text-text-muted led-pulse">Loading payload...</div>
+                      )}
+                    </div>
+                  )}
+                  {msg.text && <div className="break-words">{msg.text}</div>}
+                  <div className="message-timestamp">{new Date(msg.createdAt).toLocaleTimeString()}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="text-center text-text-muted">Loading messages...</div>
+          )}
+          <div ref={messagesEndRef} />
         </div>
         <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:items-end">
           <input

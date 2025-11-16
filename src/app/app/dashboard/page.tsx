@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('private')
   const [userId, setUserId] = useState<string | null>(null)
   const connections = useQuery(api.connections.getConnections, userId ? { userId: userId as any } : 'skip')
+  const user = useQuery(api.users.getById, userId ? { id: userId as any } : 'skip')
 
   useEffect(() => {
     setUserId(localStorage.getItem('userId'))
@@ -22,7 +23,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-deep-black terminal-texture grid-overlay">
       <Header />
       <div className="p-4 sm:p-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-text-primary mb-6 crt-scan">CHANNELS</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-text-primary mb-6 crt-scan">ACCESS GRANTED: {user?.username?.toUpperCase() || 'ANONYMOUS'}</h1>
         <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
         <div className="mt-6">
           {activeTab === 'private' && (

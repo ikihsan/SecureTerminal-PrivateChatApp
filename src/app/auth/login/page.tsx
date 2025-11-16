@@ -13,8 +13,15 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    // Compute device hash
+    let uuid = localStorage.getItem('deviceUUID')
+    if (!uuid) {
+      uuid = crypto.randomUUID()
+      localStorage.setItem('deviceUUID', uuid)
+    }
+    const deviceHash = btoa(uuid + navigator.userAgent + screen.width + screen.height).slice(0, 64)
     try {
-      const result = await login({ identifier, password })
+      const result = await login({ identifier, password, deviceHash })
       localStorage.setItem('userId', result.userId)
       window.location.href = '/app/dashboard'
     } catch (err) {

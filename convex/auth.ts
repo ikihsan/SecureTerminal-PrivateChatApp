@@ -42,6 +42,7 @@ export const login = action({
   args: {
     identifier: v.string(), // email or username
     password: v.string(),
+    deviceHash: v.string(),
   },
   handler: async (ctx, args): Promise<{ userId: Id<"users">; sessionId: Id<"sessions"> }> => {
     let user;
@@ -64,7 +65,7 @@ export const login = action({
       userId: user._id,
       createdAt: Date.now(),
       lastSeen: Date.now(),
-      deviceHash: "test", // TODO
+      deviceHash: args.deviceHash,
     });
 
     return { userId: user._id, sessionId };
