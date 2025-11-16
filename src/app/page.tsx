@@ -48,7 +48,7 @@ export default function Home() {
           <Image src="/IMG_0119.JPG" alt="Logo" width={100} height={100} className="mx-auto mb-4 rounded-full shadow-elevation-1 chromatic-aberration" />
           <h1 className="text-xl font-bold text-amber mb-4">ACCESS DENIED</h1>
           <p className="text-text-muted mb-4">Too many failed attempts. Retry later.</p>
-          <button className="button-terminal" onClick={() => window.open('mailto:support@example.com')}>CONTACT SUPPORT</button>
+          <button className="button-terminal" onClick={() => window.open('mailto:hacker@ikihsan.tech')}>CONTACT SUPPORT</button>
         </div>
       </div>
     )
