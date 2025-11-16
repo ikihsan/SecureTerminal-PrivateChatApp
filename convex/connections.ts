@@ -14,14 +14,14 @@ export const createRequest = mutation({
       .withIndex("by_username", (q) => q.eq("username", args.targetUsername))
       .first();
     if (!targetUser || targetUser.connectionCode !== args.connectionCode) {
-      throw new Error("Invalid username or connection code");
+      throw new Error("FAULTY CONNECTION CODE DETECTED!");
     }
     const existing = await ctx.db
       .query("connections")
       .withIndex("by_users", (q) => q.eq("userA", args.currentUserId).eq("userB", targetUser._id))
       .first();
     if (existing) {
-      throw new Error("Already connected");
+      throw new Error("CONNECTION ALREADY ESTABLISHED!");
     }
     // Insert the connection from current to target
     // Insert the connection from current to target

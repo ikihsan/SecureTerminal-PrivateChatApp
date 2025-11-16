@@ -11,6 +11,8 @@ export default function Home() {
   const [banned, setBanned] = useState(false)
   const authorize = useAction(api.authorizeEntryCode.authorizeEntryCode)
 
+  console.log('key = anonymous')
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // Compute device hash
@@ -68,6 +70,7 @@ export default function Home() {
           />
           <button type="submit" className="button-terminal text-text-primary">EXECUTE</button>
         </form>
+        <p className="text-text-muted text-sm mt-4 crt-scan">HACKER HINT: Check console.</p>
         {attempts > 0 && (
           <p className="text-amber mt-4">
             {attempts === 1 ? 'Last attempt.' : attempts === 2 ? 'One more try.' : 'Warning: attempts low.'}

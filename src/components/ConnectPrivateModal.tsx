@@ -22,7 +22,7 @@ export default function ConnectPrivateModal({ onClose }: ConnectPrivateModalProp
       setMessage('Handshake initiated!')
       setTimeout(() => onClose(), 2000)
     } catch (err) {
-      setError((err as Error).message)
+      setError('FAULTY CONNECTION CODE DETECTED!')
     }
   }
 
