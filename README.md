@@ -52,3 +52,17 @@ A clandestine, terminal-based private messaging application built with Next.js, 
 ## Contributing
 
 Please ensure all changes maintain the terminal aesthetic and security standards.
+```json
+{
+  "name": "dark-army-terminal",
+  "colors": {
+    "background": "#0A0A0B",
+    "panel": "#0F1113",
+    "primary": "#2BFF7A",
+    "accent": "#4CE6E6",
+    "warning": "#FFB84D",
+    "highlight": "#D4AF37",
+    "text": "#A7B0B8"
+  },
+  "font": "JetBrains Mono, monospace"
+}
