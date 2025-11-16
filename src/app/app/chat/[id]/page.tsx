@@ -22,6 +22,7 @@ export default function Chat() {
   const convex = useConvex()
   const baseUrl = convex.url
   const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({})
+  const [fetchedStorageIds, setFetchedStorageIds] = useState<Set<string>>(new Set())
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -37,19 +38,25 @@ export default function Chat() {
       if (!messages) return
       const urls: Record<string, string> = {}
       for (const msg of messages) {
-        if (msg.mediaMeta?.storageId && !mediaUrls[msg.mediaMeta.storageId]) {
+        if (msg.mediaMeta?.storageId && !fetchedStorageIds.has(msg.mediaMeta.storageId)) {
           try {
             const url = await getStorageUrl({ storageId: msg.mediaMeta.storageId })
-            if (url) urls[msg.mediaMeta.storageId] = url
+            if (url) {
+              urls[msg.mediaMeta.storageId] = url
+              fetchedStorageIds.add(msg.mediaMeta.storageId)
+            }
           } catch (e) {
             console.error('Failed to get storage URL:', e)
           }
         }
       }
-      setMediaUrls(prev => ({ ...prev, ...urls }))
+      if (Object.keys(urls).length > 0) {
+        setMediaUrls(prev => ({ ...prev, ...urls }))
+        setFetchedStorageIds(new Set(fetchedStorageIds))
+      }
     }
     fetchUrls()
-  }, [messages, getStorageUrl, mediaUrls])
+  }, [messages, getStorageUrl])
 
   useEffect(() => {
     setUserId(localStorage.getItem('userId'))
