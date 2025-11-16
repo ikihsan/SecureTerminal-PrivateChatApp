@@ -52,12 +52,12 @@ export const login = action({
       user = await ctx.runQuery(api.users.getByUsername, { username: args.identifier });
     }
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new Error("ACCESS DENIED - USER NOT FOUND");
     }
 
     const isValid = await bcrypt.compare(args.password, user.passwordHash);
     if (!isValid) {
-      throw new Error("Invalid credentials");
+      throw new Error("ACCESS DENIED - INVALID CREDENTIALS");
     }
 
     // Create session

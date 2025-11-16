@@ -25,7 +25,7 @@ export default function Login() {
       localStorage.setItem('userId', result.userId)
       window.location.href = '/app/dashboard'
     } catch (err) {
-      setError((err as Error).message)
+      setError("ACCESS DENIED")
     }
   }
 
