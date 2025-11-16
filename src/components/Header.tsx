@@ -36,7 +36,9 @@ export default function Header() {
   return (
     <>
       <header className="bg-carbon-matte shadow-elevation-1 p-4 flex items-center justify-between terminal-texture grid-overlay">
-        <Image src="/IMG_0119.JPG" alt="Logo" width={40} height={40} className="rounded-full crt-scan chromatic-aberration" />
+        <div onClick={() => window.location.href = '/app/dashboard'} className="cursor-pointer">
+          <Image src="/IMG_0119.JPG" alt="Logo" width={40} height={40} className="rounded-full crt-scan chromatic-aberration" />
+        </div>
         <div className="flex items-center space-x-2">
         <button onClick={handleLogout} className="terminal-panel px-3 py-1 !text-red-500 hover:bg-carbon-matte transition-colors">LOGOUT</button>
         <button ref={buttonRef} onClick={() => setMenuOpen(!menuOpen)} className="terminal-panel px-3 py-1 text-text-primary hover:bg-carbon-matte transition-colors">MENU</button>

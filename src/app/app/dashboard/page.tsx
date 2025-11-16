@@ -12,12 +12,43 @@ export const dynamic = 'force-dynamic'
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('private')
   const [userId, setUserId] = useState<string | null>(null)
+  const [authenticated, setAuthenticated] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const connections = useQuery(api.connections.getConnections, userId ? { userId: userId as any } : 'skip')
   const user = useQuery(api.users.getById, userId ? { id: userId as any } : 'skip')
 
   useEffect(() => {
-    setUserId(localStorage.getItem('userId'))
+    const uid = localStorage.getItem('userId')
+    if (uid) {
+      setAuthenticated(true)
+      setUserId(uid)
+    } else {
+      setShowModal(true)
+      setTimeout(() => window.location.href = '/', 3000)
+    }
   }, [])
+
+  if (showModal) {
+    return (
+      <div className="min-h-screen bg-deep-black terminal-texture grid-overlay">
+        <div className="fixed inset-0 bg-deep-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="terminal-panel p-6 crt-scan">
+            <p className="text-text-primary text-lg">Nice try kid</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-deep-black terminal-texture grid-overlay flex items-center justify-center">
+        <div className="terminal-panel p-6 crt-scan">
+          <p className="text-text-primary text-lg">LOADING...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-deep-black terminal-texture grid-overlay">
