@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { useQuery, useMutation, useAction, useConvex } from 'convex/react'
 import { useParams } from 'next/navigation'
 import { api } from 'convex/_generated/api'
-import Image from 'next/image'
 import Header from '../../../../components/Header'
 
 export const dynamic = 'force-dynamic'
@@ -112,7 +111,7 @@ export default function Chat() {
                     <div className="mb-2">
                       {mediaUrls[msg.mediaMeta.storageId] ? (
                         msg.mediaMeta.mime.startsWith('image/') ? (
-                          <Image src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" width={500} height={300} className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration object-cover" />
+                          <img src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration" />
                         ) : msg.mediaMeta.mime.startsWith('video/') ? (
                           <video src={mediaUrls[msg.mediaMeta.storageId]} controls className="max-w-full rounded max-h-64 shadow-elevation-1" />
                         ) : (
