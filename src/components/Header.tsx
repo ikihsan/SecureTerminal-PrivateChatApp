@@ -1,13 +1,18 @@
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { useQuery } from 'convex/react'
+import { api } from '../../convex/_generated/api'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [portalElement, setPortalElement] = useState<Element | null>(null)
   const [dropdownStyle, setDropdownStyle] = useState({})
   const [loggingOut, setLoggingOut] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const [userId, setUserId] = useState<string | null>(null)
+  const user = useQuery(api.users.getById, userId ? { id: userId as any } : 'skip')
 
   useEffect(() => {
     setPortalElement(document.body)
@@ -19,11 +24,15 @@ export default function Header() {
       setDropdownStyle({
         position: 'fixed',
         top: rect.bottom + 4,
-        left: rect.left - 10,
+        left: rect.left - 30,
         zIndex: 10,
       })
     }
   }, [menuOpen])
+
+  useEffect(() => {
+    setUserId(localStorage.getItem('userId'))
+  }, [])
 
   const handleLogout = () => {
     setLoggingOut(true)
@@ -44,6 +53,7 @@ export default function Header() {
       </header>
       {portalElement && menuOpen && createPortal(
         <div style={dropdownStyle} className="terminal-panel p-4 border-2 border-neon-green crt-scan">
+          <button onClick={() => { setShowProfile(true); setMenuOpen(false); }} className="block mb-2 text-acid-cyan hover:text-neon-green transition-colors">PROFILE</button>
           <button className="block mb-2 text-acid-cyan hover:text-neon-green transition-colors">CONFIG</button>
           <button className="block mb-2 text-acid-cyan hover:text-neon-green transition-colors">SECURITY</button>
           <button className="block text-acid-cyan hover:text-neon-green transition-colors">SESSIONS</button>
@@ -54,6 +64,20 @@ export default function Header() {
         <div className="fixed inset-0 bg-deep-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="terminal-panel p-6 crt-scan">
             <p className="text-text-primary text-lg">LOGGING OUT...</p>
+          </div>
+        </div>
+      )}
+      {showProfile && user && (
+        <div className="fixed inset-0 bg-deep-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="terminal-panel p-6 crt-scan max-w-md w-full">
+            <h2 className="text-xl font-bold text-neon-green mb-4">USER PROFILE</h2>
+            <div className="space-y-2">
+              <p><span className="text-acid-cyan">Real Name:</span> {user.realName}</p>
+              <p><span className="text-acid-cyan">Email:</span> {user.email}</p>
+              <p><span className="text-acid-cyan">Username:</span> {user.username}</p>
+              <p><span className="text-acid-cyan">Connection Code:</span> {user.connectionCode}</p>
+            </div>
+            <button onClick={() => setShowProfile(false)} className="mt-4 button-terminal w-full">CLOSE</button>
           </div>
         </div>
       )}
