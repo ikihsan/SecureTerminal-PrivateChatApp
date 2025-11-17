@@ -13,6 +13,12 @@
 
 ---
 
+## 🌐 LIVE DEPLOYMENT
+
+**Hosted Domain:** [www.ikihsan.tech](https://www.ikihsan.tech)
+
+---
+
 ## 🕵️ MISSION BRIEFING
 
 **SECURE TERMINAL** is a high-security, terminal-UI-based private messaging platform engineered for users who demand both **anonymity** and **encryption**. Built with cutting-edge tech and wrapped in retro terminal aesthetics, this application delivers real-time secure communications with ephemeral content destruction.
