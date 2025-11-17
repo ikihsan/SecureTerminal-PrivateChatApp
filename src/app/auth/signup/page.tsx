@@ -65,6 +65,7 @@ export default function Signup() {
             onChange={(e) => setConnectionCode(e.target.value)}
             className="input-terminal w-full"
           />
+          <p className="text-xs text-gray-500 mt-1">Note:Used further for adding connections.</p>
           <input
             type="password"
             placeholder="> Password"

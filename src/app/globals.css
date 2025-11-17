@@ -10,7 +10,7 @@
   --acid-cyan: #00FFFF;
   --gunmetal-gold: #B8860B;
   --deep-black: #000000;
-  --carbon-matte: #0D0D0D;
+  --carbon-matte: #000000;
   --grid-overlay: rgba(0, 255, 65, 0.05);
   --text-primary: var(--neon-green);
   --text-secondary: var(--amber);
@@ -139,7 +139,12 @@
 
 /* Terminal Panel */
 .terminal-panel {
-  background: var(--carbon-matte);
+  background-color: var(--carbon-matte);
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 40%, rgba(0, 0, 0, 0.1) 50%, transparent 60%);
+  background-size: 100px 100px, 150px 150px, 50px 50px;
   border: 1px solid var(--border-panel);
   border-radius: 4px;
   box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);

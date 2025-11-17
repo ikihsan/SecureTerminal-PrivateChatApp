@@ -11,8 +11,6 @@ export const dynamic = 'force-dynamic'
 export default function Chat() {
   const { id } = useParams()
   const [userId, setUserId] = useState<string | null>(null)
-  const [authenticated, setAuthenticated] = useState(false)
-  const [showModal, setShowModal] = useState(false)
   const [message, setMessage] = useState('')
   const [file, setFile] = useState<File | null>(null)
   const [ttl, setTtl] = useState('30')
@@ -61,14 +59,7 @@ export default function Chat() {
   }, [messages, getStorageUrl])
 
   useEffect(() => {
-    const uid = localStorage.getItem('userId')
-    if (uid) {
-      setAuthenticated(true)
-      setUserId(uid)
-    } else {
-      setShowModal(true)
-      setTimeout(() => window.location.href = '/', 3000)
-    }
+    setUserId(localStorage.getItem('userId'))
   }, [])
 
   useEffect(() => {
@@ -80,28 +71,6 @@ export default function Chat() {
       })
     }
   }, [userId, messages])
-
-  if (showModal) {
-    return (
-      <div className="min-h-screen bg-deep-black terminal-texture grid-overlay">
-        <div className="fixed inset-0 bg-deep-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="terminal-panel p-6 crt-scan">
-            <p className="text-text-primary text-lg">Nice try kid</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (!authenticated) {
-    return (
-      <div className="min-h-screen bg-deep-black terminal-texture grid-overlay flex items-center justify-center">
-        <div className="terminal-panel p-6 crt-scan">
-          <p className="text-text-primary text-lg">LOADING...</p>
-        </div>
-      </div>
-    )
-  }
 
   const handleSend = async () => {
     if (!message.trim() && !file) return
@@ -144,12 +113,12 @@ export default function Chat() {
           {messages ? (
             messages.map((msg: any) => (
               <div key={msg._id} className={`flex ${msg.authorId === userId ? 'justify-end' : 'justify-start'}`}>
-                <div className={`${msg.authorId === userId ? 'message-outgoing' : 'message-incoming'} relative overflow-hidden crt-scan`}>
+                <div className={`${msg.authorId === userId ? 'message-outgoing' : 'message-incoming'} relative overflow-hidden`}>
                   {msg.mediaMeta && (
                     <div className="mb-2">
                       {mediaUrls[msg.mediaMeta.storageId] ? (
                         msg.mediaMeta.mime.startsWith('image/') ? (
-                          <img src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration" />
+                          <img src={mediaUrls[msg.mediaMeta.storageId]} alt="Media" className="max-w-full rounded max-h-64 shadow-elevation-1 hover:scale-105 transition-transform duration-300 chromatic-aberration" style={{ backgroundColor: 'white' }} />
                         ) : msg.mediaMeta.mime.startsWith('video/') ? (
                           <video src={mediaUrls[msg.mediaMeta.storageId]} controls className="max-w-full rounded max-h-64 shadow-elevation-1" />
                         ) : (
