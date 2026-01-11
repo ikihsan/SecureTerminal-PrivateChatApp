@@ -15,7 +15,7 @@
 
 ## 🌐 LIVE DEPLOYMENT
 
-**Hosted Domain:** [www.ikihsan.tech](https://www.ikihsan.tech)
+**Hosted Domain:** [www.ikihsan.tech](https://chat.ikihsan.tech)
 
 ---
 
